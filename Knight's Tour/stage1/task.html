@@ -1,0 +1,59 @@
+<html>
+<h2 style="text-align: center;">Description</h2>
+
+<p>The knight's tour problem uses a chessboard and a knight. Don't worry, you won't need to know how to play chess for
+    this project, you only need to know how the knight moves.
+</p>
+
+<p>A chessboard is an 8 by 8 grid on which the pieces are placed and moved upon. In this project, we will use an (x,y)
+    coordinate system to label all the squares where (1,1) is the bottom left, and (8,8) is the top right.</p>
+
+<p>The knight is a special piece in chess. It moves in an L-shape and is able to jump over other pieces. It has to move
+    2 squares horizontally and 1 square vertically, or 2 squares vertically and 1 square horizontally.</p>
+
+<p>
+    The rules of the knight's tour are as follows:
+<ul>
+    <li>The knight can start at any square.</li>
+    <li>The knight must visit every square by moving in the L-shape.</li>
+    <li>The knight can visit each square only once.</li>
+    <li>The knight can finish anywhere on the board. This is called an 'open' tour of the board.</li>
+    <li>You win if you can visit every square on the board.</li>
+    <li>You lose if you haven't visited every square but cannot move your knight without revisiting a square.</li>
+</ul>
+</p>
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>Let's get started by setting up the puzzle:</p>
+
+<ol>
+    <li>Ask the user for the knight's starting position.</li>
+    <li>Display the 8x8 chessboard with the knight in this position. You should display a frame around the board and
+        mark the column and row numbers. You should use <code class="python">_</code> for an empty cell with a space in between, and an <code class="python">X</code> for the
+        knight's position.</li>
+</ol>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>The example below shows how your program should work.</p>
+
+<p>The greater-than symbol followed by space (<code class="python">&gt; </code>) represents the user input. Notice that
+    it's not the part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter knight's starting position: &gt; 1 3
+    -------------------
+   8| _ _ _ _ _ _ _ _ |
+   7| _ _ _ _ _ _ _ _ |
+   6| _ _ _ _ _ _ _ _ |
+   5| _ _ _ _ _ _ _ _ |
+   4| _ _ _ _ _ _ _ _ |
+   3| X _ _ _ _ _ _ _ |
+   2| _ _ _ _ _ _ _ _ |
+   1| _ _ _ _ _ _ _ _ |
+    -------------------
+      1 2 3 4 5 6 7 8 </code></pre>
+
+</html>
