@@ -1,0 +1,77 @@
+<html>
+<h2 style="text-align: center;">Description</h2>
+
+<p>Now that we have the board set up, let's see where our knight can move.</p>
+
+<p>The knight moves in an L-shape and is able to jump over other pieces. It has to move 2 squares horizontally and 1
+    square vertically, or 2 squares vertically and 1 square horizontally.</p>
+
+<p>Here are two examples showing where the knight can move. In the first example, there are 8 possible moves for the
+    knight.</p>
+
+<img src="./move1.png" style="height:200px;max-width:300px;margin:auto"/>
+
+<p>In the second example, there are only 3 possible moves since the knight must stay on the board.</p>
+
+<img src="./move2.png" style="height:200px;max-width:300px;margin:auto"/>
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>In this stage, you should alter your program to do the following:</p>
+
+<ol>
+    <li>From the starting position, check all 8 possible moving directions.</li>
+    <li>If the move is possible, mark the landing position with an 'O'.</li>
+    <li>If the move is not possible then no action is required.</li>
+
+</ol>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>The example below shows how your program should work.</p>
+
+<p>The greater-than symbol followed by space (<code class="python">&gt; </code>) represents the user input. Notice that
+    it's not the part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 6 5
+Enter knight's starting position: > 4 2
+
+Here are the possible moves:
+ ---------------
+5| _ _ _ _ _ _ |
+4| _ _ O _ O _ |
+3| _ O _ _ _ O |
+2| _ _ _ X _ _ |
+1| _ O _ _ _ O |
+ ---------------
+   1 2 3 4 5 6 </code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 3 4
+Enter knight's starting position: > 2 2
+
+Here are the possible moves:
+ ---------
+4| O _ O |
+3| _ _ _ |
+2| _ X _ |
+1| _ _ _ |
+ ---------
+   1 2 3</code></pre>
+
+<p><strong>Example 3:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 1 2
+Enter knight's starting position: > 1 2
+
+Here are the possible moves:
+ -----
+2| X |
+1| _ |
+ -----
+   1</code></pre>
+
+</html>

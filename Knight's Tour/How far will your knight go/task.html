@@ -1,0 +1,137 @@
+<html>
+<h2 style="text-align: center;">Description</h2>
+
+<p>It's time for you to try this puzzle yourself. Now you need to allow your program to make multiple moves and mark
+    squares you have already visited.</p>
+
+<p>This is a hard puzzle, so hopefully using Warnsdorff's algorithm can help you finish the puzzle. Note that the
+    algorithm doesn't guarantee you will finish the puzzle, and you are free to ignore the algorithm. Also, not all
+    boards have a solution!</p>
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>In this stage, you should alter your program to do the following:</p>
+
+<ol>
+    <li>Set up the board as before.</li>
+    <li>Once the game starts, show the board's state and number of possible moves using Warnsdorff's algorithm.</li>
+    <li>Prompt the player for the knight's move.</li>
+    <li>Check if the move is valid. If not, ask player for another move.</li>
+    <li>Move the knight and mark with 'X'. Mark visited squares with '*'.</li>
+    <li>Repeat the above until there are no more possible moves.</li>
+    <li>If the player visits every square, congratulate the player.</li>
+    <li>If the player does not visit every square, print the number of moves they made.</li>
+</ol>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>The example below shows how your program should work.</p>
+
+<p>The greater-than symbol followed by space (<code class="python">&gt; </code>) represents the user input. Notice that
+    it's not the part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 4 4
+Enter knight's starting position: > 2 2
+ -----------
+4| 1 _ 2 _ |
+3| _ _ _ 2 |
+2| _ X _ _ |
+1| _ _ _ 1 |
+ -----------
+   1 2 3 4
+    
+Enter your next move: > 2 2
+Invalid move. Enter your next move: > 4 1
+ -----------
+4| _ _ _ _ |
+3| _ _ 3 _ |
+2| _ * _ _ |
+1| _ _ _ X |
+ -----------
+   1 2 3 4
+
+Enter your next move: > 3 2
+ -----------
+4| 0 _ _ _ |
+3| _ _ X _ |
+2| _ * _ _ |
+1| _ _ _ * |
+ -----------
+   1 2 3 4
+
+Enter your next move: > 1 4
+ -----------
+4| X _ _ _ |
+3| _ _ * _ |
+2| _ * _ _ |
+1| _ _ _ * |
+ -----------
+   1 2 3 4
+
+No more possible moves!
+Your knight moved 4 spaces!</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 5 4
+Enter knight's starting position: > 1 4
+ -------------
+4| X _ _ _ _ |
+3| _ _ 5 _ _ |
+2| _ 3 _ _ _ |
+1| _ _ _ _ _ |
+ -------------
+   1 2 3 4 5
+
+Enter your next move: > 3 3
+ -------------
+4| * _ 3 _ _ |
+3| _ _ _ 3 _ |
+2| _ X _ _ _ |
+1| _ _ _ 2 _ |
+ -------------
+   1 2 3 4 5
+
+Enter your next move: > 4 2
+ -------------
+4| * _ _ _ _ |
+3| _ _ 5 _ 2 |
+2| _ * _ _ _ |
+1| _ _ _ X _ |
+ -------------
+   1 2 3 4 5
+
+....
+
+Enter your next move: > 4 4
+ -------------
+4| * * * X * |
+3| * 1 * * * |
+2| * * * * * |
+1| _ * * * * |
+ -------------
+   1 2 3 4 5
+
+Enter your next move: > 2 3
+ -------------
+4| * * * * * |
+3| * X * * * |
+2| * * * * * |
+1| 0 * * * * |
+ -------------
+   1 2 3 4 5
+
+Enter your next move: > 1 1
+ -------------
+4| * * * * * |
+3| * * * * * |
+2| * * * * * |
+1| X * * * * |
+ -------------
+   1 2 3 4 5
+
+Your knight toured the whole board!</code></pre>
+
+</html>

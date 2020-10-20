@@ -1,0 +1,86 @@
+<html>
+<h2 style="text-align: center;">Description</h2>
+
+<p>Now that we know where our knight can move, we should have a strategy on how our knight should move. As you saw
+    previously, there are often many routes available. We could check every combination of routes possible, but this is
+    hard to do by ourselves. In a computer program, we could use brute force to check every possible route combination
+    until we find a solution. This is inefficient and could take a while even for a computer to do. How can we determine
+    which route gives us the best chance of finishing the puzzle? We can use Warnsdorff's algorithm to help us.</p>
+
+<p>Warnsdorff's algorithm is a strategy for us to choose the best move based off the knight's position and the board's
+    status. To apply it:</p>
+
+<ol>
+    <li>Check if each 8 of the knight's moves are possible.</li>
+    <li>If possible, check how many moves are possible from that landing position.</li>
+</ol>
+
+<p>Here is an example of the algorithm:</p>
+
+<img src="./possible1.png" style="height:200px;max-width:300px;margin:auto" />
+
+<p>From the starting position, there are 8 possible moves. The number of next possible moves from each landing spot is
+    marked. Here is an example showing how the number of next possible moves is determined. Note that the highest number
+    is 7 since you cannot revisit the square you moved from, and the lowest number is 0 which indicates a dead-end.</p>
+
+<img src="./possible2.png" style="height:200px;max-width:300px;margin:auto" />
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>In this stage, you should alter your program to do the following:</p>
+
+<ol>
+    <li>From the starting position, check all 8 possible moving directions.</li>
+    <li>If the move is possible, mark the square with how many moves are possible from the landing square.</li>
+    <li>If the move is not possible then no action is required.</li>
+</ol>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>The example below shows how your program should work.</p>
+
+<p>The greater-than symbol followed by space (<code class="python">&gt; </code>) represents the user input. Notice that
+    it's not the part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 6 5
+Enter knight's starting position: > 4 2
+
+Here are the possible moves:
+ ---------------
+5| _ _ _ _ _ _ |
+4| _ _ 5 _ 2 _ |
+3| _ 5 _ _ _ 3 |
+2| _ _ _ X _ _ |
+1| _ 2 _ _ _ 1 |
+ ---------------
+   1 2 3 4 5 6</code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 3 4
+Enter knight's starting position: > 2 2
+
+Here are the possible moves:
+ ---------
+4| 1 _ 1 |
+3| _ _ _ |
+2| _ X _ |
+1| _ _ _ |
+ ---------
+   1 2 3</code></pre>
+
+<p><strong>Example 3:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: > 1 2
+Enter knight's starting position: > 1 2
+
+Here are the possible moves:
+ -----
+2| X |
+1| _ |
+ -----
+   1</code></pre>
+
+</html>

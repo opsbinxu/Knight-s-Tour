@@ -1,0 +1,59 @@
+<html>
+<h2 style="text-align: center;">Description</h2>
+
+<p>Although this puzzle is based on chess, you can actually try this puzzle on any sized board. The dimensions of the
+    board are not constrained to an 8x8 grid. You can try smaller boards like 5x5, rectangular boards like 4x8, even
+    non-rectangular boards with missing squares! To make things simple, we will only focus on rectangular boards. Note,
+    the board is guaranteed to have a solution if the smallest dimension is at least 5. Smaller boards are not
+    guaranteed to have a solution.
+</p>
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>In this stage, you should alter your program to do the following:</p>
+
+<ol>
+    <li>Ask the user for the board's dimensions. The order of the values should be x columns and y rows.</li>
+    <li>After taking the starting position, check that it is a valid position.</li>
+    <li>If it is invalid, you should show an error message Invalid position!, then prompt the user for another starting
+        position until the user enters a valid position.</li>
+    <li>Draw the board with the knight.</li>
+</ol>
+
+<h2 style="text-align: center;">Examples</h2>
+
+<p>The example below shows how your program should work.</p>
+
+<p>The greater-than symbol followed by space (<code class="python">&gt; </code>) represents the user input. Notice that
+    it's not the part of the input.</p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: &gt; 6 5
+Enter knight's starting position: &gt; 4 2
+ ---------------
+5| _ _ _ _ _ _ |
+4| _ _ _ _ _ _ |
+3| _ _ _ _ _ _ |
+2| _ _ _ X _ _ |
+1| _ _ _ _ _ _ |
+ ---------------
+   1 2 3 4 5 6 </code></pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board's dimensions: &gt; 4 4
+Enter knight's starting position: &gt; 8 8
+Invalid position!
+Enter knight's starting position: &gt; -1 2
+Invalid position!
+Enter knight's starting position: &gt; 2 2
+ -----------
+4| _ _ _ _ |
+3| _ _ _ _ |
+2| _ X _ _ |
+1| _ _ _ _ |
+ -----------
+   1 2 3 4 </code></pre>
+
+</html>

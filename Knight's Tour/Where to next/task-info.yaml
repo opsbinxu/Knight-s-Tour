@@ -4,3 +4,7 @@ files:
   visible: true
 - name: tests.py
   visible: true
+- name: move2.png
+  visible: true
+- name: move1.png
+  visible: true
