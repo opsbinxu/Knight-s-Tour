@@ -22,7 +22,7 @@ def printBoard(x, y, ncols, nrows, board):
         xlabel.append(str(colnum).rjust(xaxiswidth))
 
     # generate top and bottom border
-    border = " " * yaxiswidth + "-" + "-" * (xaxiswidth + 1) * ncols + "--"    
+    border = " " * yaxiswidth + "-" + "-" * (xaxiswidth + 1) * ncols + "--"
 
     # print out board
     print(border)
@@ -34,7 +34,7 @@ def printBoard(x, y, ncols, nrows, board):
             if col == -1:
                 print("_" * xaxiswidth, end=' ')
             else:
-                print(col.rjust(xaxiswidth), end=' ', sep='')
+                print(str(col).rjust(xaxiswidth), end=' ', sep='')
         print("|")
     print(border)
 
@@ -64,7 +64,18 @@ def checkMove(cur_x, cur_y, ncols, nrows, board):
         new_x = cur_x + move_x[i]   # user coordinates 1 - n
         new_y = cur_y + move_y[i]   # user coordinates 1 - n
         if validMove(new_x, new_y, ncols, nrows, board):
-            board[new_y-1][new_x-1] = "O"
+            board[new_y-1][new_x-1] = warnsdorff(new_x, new_y, ncols, nrows, board)
+
+def warnsdorff(cur_x, cur_y, ncols, nrows, board):
+    move_x = [2, 1, -1, -2, -2, -1, 1, 2]
+    move_y = [1, 2, 2, 1, -1, -2, -2, -1]
+    possible = 0
+    for i in range(DIRECTIONS):
+        new_x = cur_x + move_x[i]   # user coordinates 1 - n
+        new_y = cur_y + move_y[i]   # user coordinates 1 - n
+        if validMove(new_x, new_y, ncols, nrows, board):    # user coordinates 1 - n
+            possible += 1
+    return possible
 
 
 def main():
