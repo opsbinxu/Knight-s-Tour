@@ -1,3 +1,11 @@
+# **********************************************************************
+#  Project           : Hyperskill Knight's Tour, Stage 1
+#  Program name      : game.py
+#  Author            : Bing Xu, opsbinxu
+#  Date created      : 2020 / 10 / 22
+#  Purpose           : Display chessboard
+# **********************************************************************
+
 def print_board(x, y):
     border = " -------------------"
     xlabel = "  1 2 3 4 5 6 7 8 "

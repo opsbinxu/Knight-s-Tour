@@ -1,3 +1,11 @@
+# **********************************************************************
+#  Project           : Hyperskill Knight's Tour, Stage 5
+#  Program name      : game.py
+#  Author            : Bing Xu, opsbinxu
+#  Date created      : 2020 / 10 / 22
+#  Purpose           : User to try solving the knight's tour manually
+# **********************************************************************
+
 from copy import deepcopy
 DIRECTIONS = 8
 move_x = [2, 1, -1, -2, -2, -1, 1, 2]

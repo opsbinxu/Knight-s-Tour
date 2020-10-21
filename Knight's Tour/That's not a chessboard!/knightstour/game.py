@@ -1,3 +1,11 @@
+# **********************************************************************
+#  Project           : Hyperskill Knight's Tour, Stage 2
+#  Program name      : game.py
+#  Author            : Bing Xu, opsbinxu
+#  Date created      : 2020 / 10 / 22
+#  Purpose           : Display any sized board
+# **********************************************************************
+
 def digits(num):
     return len(str(num))
 
