@@ -44,6 +44,7 @@ def printBoard(ncols, nrows, board):
 
     # print out x labels
     print(*xlabel)
+    return
 
 
 def validMove(x, y, past_x, past_y, ncols, nrows, board):  # user coordinates 1 - n
@@ -96,6 +97,7 @@ def checkMove(cur_x, cur_y, ncols, nrows, board):
             possible = warnsdorff(new_x, new_y, ncols, nrows, board)
             board[new_y-1][new_x - 1] = possible
             deadend = False
+    return board
 
 
 def rank_moves(cur_x, cur_y, ncols, nrows, board):
@@ -138,23 +140,23 @@ def play_game(start_x, start_y, ncols, nrows):
     global win, deadend
 
     # check board is possible
-    board = [[-1 for i in range(ncols)] for i in range(nrows)]
+    solnboard = [[-1 for i in range(ncols)] for i in range(nrows)]
     moves = 1
-    board[start_y-1][start_x-1] = moves
-    soln_exist = find_tour(start_x, start_y, ncols, nrows, board, moves+1)
+    solnboard[start_y-1][start_x-1] = moves
+    soln_exist = find_tour(start_x, start_y, ncols, nrows, solnboard, moves+1)
     if not soln_exist:
         print("No solution exists!")
         return
 
     # set up board for play
-    board = [[-1 for i in range(ncols)] for i in range(nrows)]
-    board[start_y-1][start_x-1] = "X"
+    playboard = [[-1 for i in range(ncols)] for i in range(nrows)]
+    playboard[start_y-1][start_x-1] = "X"
     last_x, last_y = start_x, start_y
     spaces = ncols * nrows
 
     # generate first hint and print board
-    warns_board = deepcopy(board)       # duplicate board to show hint
-    checkMove(start_x, start_y, ncols, nrows, warns_board)
+    warns_board = deepcopy(playboard)       # duplicate board to show hint
+    warns_board = checkMove(start_x, start_y, ncols, nrows, warns_board)
     printBoard(ncols, nrows, warns_board), print("")
 
     while not win and not deadend:
@@ -163,17 +165,17 @@ def play_game(start_x, start_y, ncols, nrows):
                 x, y = map(int, input("Enter your next move: ").split())
                 if not onBoard(x, y, ncols, nrows):
                     raise ValueError
-                if not validMove(x, y, last_x, last_y, ncols, nrows, board):
+                if not validMove(x, y, last_x, last_y, ncols, nrows, playboard):
                     raise ValueError
             except ValueError:
                 print('Invalid move! ', end='')
                 continue
             else:
-                board[y-1][x-1] = "X"
-                board[last_y-1][last_x-1] = "*"
+                playboard[y-1][x-1] = "X"
+                playboard[last_y-1][last_x-1] = "*"
                 last_x, last_y = x, y
-                warns_board = deepcopy(board)
-                checkMove(x, y, ncols, nrows, warns_board)
+                warns_board = deepcopy(playboard)
+                warns_board = checkMove(x, y, ncols, nrows, warns_board)
                 printBoard(ncols, nrows, warns_board), print("")
                 moves += 1
                 break
@@ -184,18 +186,20 @@ def play_game(start_x, start_y, ncols, nrows):
         print("No more possible moves!")
         print(f"Your knight visted {moves} space",
               "s" * (1 if (moves > 1) else 0), "!", sep="")
+    return
 
 
 def show_answer(x, y, ncols, nrows):
-    board = [[-1 for i in range(ncols)] for i in range(nrows)]
+    solnboard = [[-1 for i in range(ncols)] for i in range(nrows)]
     moves = 1
-    board[y-1][x-1] = moves
-    soln_exist = find_tour(x, y, ncols, nrows, board, moves+1)
+    solnboard[y-1][x-1] = moves
+    soln_exist = find_tour(x, y, ncols, nrows, solnboard, moves+1)
     if soln_exist:
         print("Here's a solution!")
-        printBoard(ncols, nrows, board)
+        printBoard(ncols, nrows, solnboard)
     else:
         print("No solution exists!")
+    return
 
 
 def find_tour(cur_x, cur_y, ncols, nrows, board, moves):
@@ -236,6 +240,7 @@ def main():
         play_game(x, y, ncols, nrows)
     else:
         show_answer(x, y, ncols, nrows)
+    return
 
 
 if __name__ == "__main__":
