@@ -22,8 +22,6 @@ def printBoard(ncols, nrows, board):
     xlabel = [" " * (yaxiswidth + 1)]
     for col in range(ncols):
         colnum = col + 1
-        # xlabel.append(" " * (xaxiswidth - digits(colnum)) + str(colnum))
-        # xlabel.append("{num:{fill}{width}}".format(num=colnum, fill=" ", width=xaxiswidth))
         xlabel.append(str(colnum).rjust(xaxiswidth))
 
     # generate top and bottom border
@@ -98,8 +96,33 @@ def warnsdorff(cur_x, cur_y, ncols, nrows, board):
     return possible
 
 
-def play_game(start_x, start_y, ncols, nrows, board):
+def setup():
+    while True:
+        try:
+            ncols, nrows = map(int, input(
+                "Enter your board's dimensions: ").split())
+        except ValueError:
+            print("Invalid entry!")
+            continue
+        else:
+            break
+    while True:
+        try:
+            x, y = map(int, input("Enter knight's starting position: ").split())
+            if not onBoard(x, y, ncols, nrows):
+                raise ValueError
+        except ValueError:
+            print('Invalid position!')
+            continue
+        else:
+            break
+    return x, y, ncols, nrows
+
+
+def play_game(start_x, start_y, ncols, nrows):
     global win, deadend
+    board = [[-1 for i in range(ncols)] for i in range(nrows)]
+    board[start_y-1][start_x-1] = "X"
     last_x, last_y = start_x, start_y
     warns_board = deepcopy(board)
     checkMove(start_x, start_y, ncols, nrows, warns_board)
@@ -138,29 +161,8 @@ def play_game(start_x, start_y, ncols, nrows, board):
 
 
 def main():
-    while True:
-        try:
-            ncols, nrows = map(int, input(
-                "Enter your board's dimensions: ").split())
-        except ValueError:
-            print("Invalid entry!")
-            continue
-        else:
-            board = [[-1 for i in range(ncols)] for i in range(nrows)]
-            break
-    while True:
-        try:
-            x, y = map(int, input("Enter knight's starting position: ").split())
-            if not onBoard(x, y, ncols, nrows):
-                raise ValueError
-        except ValueError:
-            print('Invalid position!')
-            continue
-        else:
-            board[y-1][x-1] = "X"
-            break
-
-    play_game(x, y, ncols, nrows, board)
+    x, y, ncols, nrows = setup()
+    play_game(x, y, ncols, nrows)
 
 
 if __name__ == "__main__":
