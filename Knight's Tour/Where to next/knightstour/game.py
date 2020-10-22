@@ -1,7 +1,7 @@
 # **********************************************************************
 #  Project           : Hyperskill Knight's Tour, Stage 3
 #  Program name      : game.py
-#  Author            : Bing Xu, opsbinxu
+#  Author            : Bing Xu / opsbinxu / bingdaxu@gmail.com
 #  Date created      : 2020 / 10 / 22
 #  Purpose           : See where the knight can move
 # **********************************************************************
