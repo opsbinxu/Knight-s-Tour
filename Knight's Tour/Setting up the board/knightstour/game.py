@@ -24,9 +24,22 @@ def print_board(x, y):
     print(border)
     print(xlabel)
 
+def invalidMove(x, y):
+    if x < 1 or y < 1 or x > 8 or y > 8:
+        return True
+    return False
 
 def main():
-    x, y = map(int, input("Enter knight's starting position: ").split())
+    while True:
+        try:
+            x, y = map(int, input("Enter knight's starting position: ").split())
+            if invalidMove(x, y):
+                raise ValueError
+        except ValueError:
+            print('Invalid position!')
+            continue
+        else:
+            break
     print_board(x, y)
 
 
