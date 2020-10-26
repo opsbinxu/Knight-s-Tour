@@ -8,7 +8,7 @@
 
 def print_board(x, y):
     border = " -------------------"
-    xlabel = "  1 2 3 4 5 6 7 8 "
+    xlabel = "   1 2 3 4 5 6 7 8 "
     nrows = 8
     ncols = 8
 
