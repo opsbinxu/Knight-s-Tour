@@ -4,25 +4,23 @@ from hstest.test_case import TestCase, SimpleTestCase
 # from hstest.check_result import CheckResult
 import random
 
+random.seed()
 x_start = random.randint(1, 8)
 y_start = random.randint(1, 8)
-random.seed()
-x_start2 = str(random.randint(1, 8))
-y_start2 = str(random.randint(1, 8))
 start = str(x_start) + " " + str(y_start)
-start2 = str(x_start2) + " " + str(y_start2)
+
 ncols = 8
 nrows = 8
 
 class KnightsTourTest(StageTest):
     def generate(self) -> List[TestCase]:
         return [TestCase(stdin=[self.check_request]),
-                # TestCase(stdin=["1 10", start], check_function=self.check_bounds),
-                # TestCase(stdin=["-1 5", start], check_function=self.check_bounds),
-                # TestCase(stdin=["1", start], check_function=self.check_length),
-                # TestCase(stdin=["1 1 1", start], check_function=self.check_length),
-                # TestCase(stdin=["1 a", start], check_function=self.check_num),
-                TestCase(stdin=start)]
+                TestCase(stdin=["1 10", start], check_function=self.check_bounds),
+                TestCase(stdin=["-1 5", start], check_function=self.check_bounds),
+                TestCase(stdin=["1", start], check_function=self.check_length),
+                TestCase(stdin=["1 1 1", start], check_function=self.check_length),
+                TestCase(stdin=["1 a", start], check_function=self.check_num),
+                TestCase(stdin=start),]
 
     def check_request(self, output):
         output = output.lower()
@@ -48,13 +46,16 @@ class KnightsTourTest(StageTest):
     def check(self, reply: str, attach: Any) -> CheckResult:
         reply = reply.split("-------------------\n")
 
-        # check starting position and axis labels
+        # extract board and xlabels
         try:
-            board = reply[1].split("\n")[0:nrows]
+            board = reply[1].split(" |\n")[0:nrows]
+            if len(board) != nrows:
+                return CheckResult.wrong("Incorrect side borders or format")
             xaxis = reply[2].strip().split(" ")
         except IndexError:
             return CheckResult.wrong("Incorrect top or bottom border")
 
+        # iterate through rows to check
         for n, row in enumerate(board):
             rownum = nrows - n
             colnum = n + 1
@@ -62,6 +63,8 @@ class KnightsTourTest(StageTest):
                 return CheckResult.wrong("Incorrect column numbers")
             if rownum == y_start:
                 row = row.split("|")
+                if len(row) != 2:
+                    return CheckResult.wrong("Incorrect side borders or format")
                 if rownum != int(row[0]):
                     return CheckResult.wrong("Incorrect row numbers")
                 row = row[1].strip().split(" ")
