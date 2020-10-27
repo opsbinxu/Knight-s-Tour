@@ -44,7 +44,15 @@ class KnightsTourTest(StageTest):
         return CheckResult.correct()
 
     def check(self, reply: str, attach: Any) -> CheckResult:
-        reply = reply.split("-------------------\n")
+        # check output
+        try:
+            if reply == "":
+                return CheckResult.wrong("Output was empty")
+            reply = reply.split("-------------------\n")
+            if len(reply) != 3:
+                return CheckResult.wrong("Incorrect top or bottom border")
+        except:
+            return CheckResult.wrong("Incorrect output")
 
         # extract board and xlabels
         try:

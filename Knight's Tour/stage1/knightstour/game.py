@@ -42,6 +42,5 @@ def main():
             break
     print_board(x, y)
 
-
 if __name__ == "__main__":
     main()
