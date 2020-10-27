@@ -1,7 +1,7 @@
 # from hstest.stage_test import StageTest
 from hstest.stage_test import *
 from hstest.test_case import TestCase, SimpleTestCase
-# from hstest.check_result import CheckResult
+from hstest.check_result import CheckResult
 import random
 
 random.seed()
