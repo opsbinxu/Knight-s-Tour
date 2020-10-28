@@ -12,8 +12,8 @@ def digits(num):
 def print_board(x, y, ncols, nrows):
     # determine x and y axis number width
     yaxiswidth = digits(nrows)
-    # xaxiswidth = digits(nrows * ncols)
-    xaxiswidth = 1
+    xaxiswidth = digits(nrows * ncols)
+    # xaxiswidth = 1
 
     # generate x axis labels
     xlabel = [" " * (yaxiswidth + 1)]

@@ -55,9 +55,10 @@ class KnightsTourTest(StageTest):
     def check(self, reply: str, attach: Any) -> CheckResult:
         # check output
         try:
-            border = "-"*(2 * ncols+3)+"\n"
             if reply == "":
                 return CheckResult.wrong("Output was empty")
+
+            border = "-"*(2 * ncols+3)+"\n"
             reply = reply.split(border)
             if len(reply) != 3:
                 return CheckResult.wrong("Incorrect border or spacing")
