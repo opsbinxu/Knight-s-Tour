@@ -91,6 +91,8 @@ def main():
         try:
             ncols, nrows = map(int, input(
                 "Enter your board's dimensions: ").split())
+            if ncols < 1 or nrows < 1:
+                raise ValueError
         except ValueError:
             print("Invalid entry!")
             continue

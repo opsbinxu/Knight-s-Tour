@@ -26,7 +26,7 @@ def checkMove(board):
         for j in range(nrows):
             if [i+1, j+1] in movelist:
                 if board[j][i] not in ["o", "O", "0"]:
-                    return False, CheckResult.wrong("Marker missing from possible location")
+                    return False, CheckResult.wrong("Marker missing from possible move")
             elif i+1 == x_start and j+1 == y_start:
                 if board[j][i] not in ["x", "X"]:
                     return False, CheckResult.wrong("Incorrect starting position or marker")
@@ -36,14 +36,14 @@ def checkMove(board):
     return True, CheckResult.correct()
 
 random.seed()
-ncols = random.randint(1, 8)
-nrows = random.randint(1, 8)
+ncols = random.randint(3, 8)
+nrows = random.randint(3, 8)
 
 yaxiswidth = digits(nrows)
 xaxiswidth = digits(nrows * ncols)
 size = str(ncols) + " " + str(nrows)
-x_start = random.randint(1, ncols)
-y_start = random.randint(1, nrows)
+x_start = random.randint(3, ncols)
+y_start = random.randint(3, nrows)
 start = str(x_start) + " " + str(y_start)
 
 
