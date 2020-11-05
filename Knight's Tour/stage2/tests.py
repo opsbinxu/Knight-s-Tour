@@ -11,10 +11,8 @@ def digits(num):
 
 
 random.seed()
-# ncols = random.randint(1, 8)
-# nrows = random.randint(1, 8)
-ncols = 10
-nrows = 10
+ncols = random.randint(1, 8)
+nrows = random.randint(1, 8)
 
 yaxiswidth = digits(nrows)
 xaxiswidth = digits(nrows * ncols)
@@ -33,8 +31,16 @@ class KnightsTourTest(StageTest):
         #         TestCase(stdin=["1 1 1", start], check_function=self.check_length),
         #         TestCase(stdin=["1 a", start], check_function=self.check_num),
         #         TestCase(stdin=start),]
-        return [TestCase(stdin=[self.check_request_size, self.check_request_start]), ]
-        # TestCase(stdin=["1 10", start], check_function=self.check_bounds),]
+        return [TestCase(stdin=[self.check_request_size, self.check_request_start]),
+                TestCase(stdin=["-1 10", size, start], check_function=self.check_bounds),
+                TestCase(stdin=["1", size, start], check_function=self.check_length),
+                TestCase(stdin=["a 10", size, start], check_function=self.check_num),
+                TestCase(stdin=[size, "0 0", start], check_function=self.check_bounds),
+                TestCase(stdin=[size, "1", start], check_function=self.check_length),
+                TestCase(stdin=[size, "a 1", start], check_function=self.check_num),
+                TestCase(stdin=[size, "-1 " + str(y_start), start], check_function=self.check_bounds),
+                TestCase(stdin=[size, str(ncols+1) + " " + str(nrows+1), start], check_function=self.check_bounds),
+                TestCase(stdin=[size, start]), ]
 
     def check_request_size(self, output):
         output = output.lower()
@@ -50,7 +56,7 @@ class KnightsTourTest(StageTest):
 
     def check_bounds(self, reply: str, attach: Any) -> CheckResult:
         if "invalid" not in reply.lower():
-            return CheckResult.wrong("Your program should check if the position is within bounds")
+            return CheckResult.wrong("Your program should check if the board size and position are within bounds")
         return CheckResult.correct()
 
     def check_length(self, reply: str, attach: Any) -> CheckResult:

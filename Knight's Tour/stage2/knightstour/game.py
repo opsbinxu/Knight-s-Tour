@@ -53,9 +53,10 @@ def main():
         try:
             ncols, nrows = map(int, input(
                 "Enter your board's dimensions: ").split())
+            if ncols < 1 or nrows < 1:
+                raise ValueError
         except ValueError:
             print("Invalid entry!")
-            continue
         else:
             break
     while True:
@@ -65,7 +66,6 @@ def main():
                 raise ValueError
         except ValueError:
             print('Invalid position!')
-            continue
         else:
             break
     print_board(x, y, ncols, nrows)
