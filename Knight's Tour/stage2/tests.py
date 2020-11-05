@@ -24,13 +24,6 @@ start = str(x_start) + " " + str(y_start)
 
 class KnightsTourTest(StageTest):
     def generate(self) -> List[TestCase]:
-        # return [TestCase(stdin=[self.check_request]),
-        #         TestCase(stdin=["1 10", start], check_function=self.check_bounds),
-        #         TestCase(stdin=["-1 5", start], check_function=self.check_bounds),
-        #         TestCase(stdin=["1", start], check_function=self.check_length),
-        #         TestCase(stdin=["1 1 1", start], check_function=self.check_length),
-        #         TestCase(stdin=["1 a", start], check_function=self.check_num),
-        #         TestCase(stdin=start),]
         return [TestCase(stdin=[self.check_request_size, self.check_request_start]),
                 TestCase(stdin=["-1 10", size, start], check_function=self.check_bounds),
                 TestCase(stdin=["1", size, start], check_function=self.check_length),
@@ -150,7 +143,7 @@ class KnightsTourTest(StageTest):
 
                 # check correct position
                 if row[x_start - 1] not in ['x', 'X']:
-                    return CheckResult.wrong("Incorrect starting position")
+                    return CheckResult.wrong("Incorrect starting position or marker")
 
                 # check this row if placeholders are correct
                 for place in row:

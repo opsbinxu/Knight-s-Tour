@@ -80,6 +80,8 @@ def main():
         try:
             ncols, nrows = map(int, input(
                 "Enter your board's dimensions: ").split())
+            if ncols < 1 or nrows < 1:
+                raise ValueError
         except ValueError:
             print("Invalid entry!")
             continue
@@ -100,7 +102,8 @@ def main():
 
     checkMove(x, y, ncols, nrows, board)
     # print(*board[::-1], sep="\n")
-
+    # board[0][0] = "__"
+    # board[0][1] = " O"
     print("\nHere are the possible moves:")
     printBoard(x, y, ncols, nrows, board)
 
