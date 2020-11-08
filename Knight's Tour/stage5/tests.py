@@ -20,19 +20,20 @@ def checkMove(board):
     for i in range(DIRECTIONS):
         new_x = lastx1 + move_x[i]  # user coordinates 1 - n
         new_y = lasty1 + move_y[i]  # user coordinates 1 - n
-        if new_x in range(1, ncols+1) and new_y in range(1, nrows + 1) and ("_" in board[new_y-1][new_x-1] or board[new_y-1][new_x-1].isnumeric()):
+        if new_x in range(1, ncols + 1) and new_y in range(1, nrows + 1) and (
+                "_" in board[new_y - 1][new_x - 1] or board[new_y - 1][new_x - 1].isnumeric()):
             movelist.append([new_x, new_y])
 
-    for i in range(ncols):          # i = x = cols
-        for j in range(nrows):      # j = y = rows
-            if [i+1, j+1] in movelist:
+    for i in range(ncols):  # i = x = cols
+        for j in range(nrows):  # j = y = rows
+            if [i + 1, j + 1] in movelist:
                 possible = warnsdorff(i + 1, j + 1, board)
                 if board[j][i] != str(possible):
                     return False, CheckResult.wrong("Incorrect value or marker missing from possible move")
-            elif i+1 == lastx1 and j+1 == lasty1:
+            elif i + 1 == lastx1 and j + 1 == lasty1:
                 if board[j][i] not in ["x", "X"]:
                     return False, CheckResult.wrong("Incorrect starting position or marker")
-            elif [i+1, j+1] in moves1:
+            elif [i + 1, j + 1] in moves1:
                 if board[j][i] != "*":
                     return False, CheckResult.wrong("Incorrect marker or marker missing from previous move")
             else:
@@ -44,8 +45,8 @@ def checkMove(board):
 def warnsdorff(cur_x, cur_y, board):
     possible = 0
     for i in range(DIRECTIONS):
-        new_x = cur_x + move_x[i]   # user coordinates 1 - n
-        new_y = cur_y + move_y[i]   # user coordinates 1 - n
+        new_x = cur_x + move_x[i]  # user coordinates 1 - n
+        new_y = cur_y + move_y[i]  # user coordinates 1 - n
         if validMove(new_x, new_y, board):
             possible += 1
     return possible
@@ -54,7 +55,7 @@ def warnsdorff(cur_x, cur_y, board):
 def validMove(x, y, board):  # user coordinates 1 - n
     if not onBoard(x, y):
         return False
-    if not "_" in board[y-1][x-1] and not board[y-1][x-1].isnumeric():
+    if not "_" in board[y - 1][x - 1] and not board[y - 1][x - 1].isnumeric():
         return False
     return True
 
@@ -64,12 +65,13 @@ def onBoard(x, y):  # user coordinates 1 - n
         return True
     return False
 
+
 random.seed()
 ncols = 4
 nrows = 3
 lastx1 = 2
 lasty1 = 1
-moves1 = [[1,1],[3, 2], [1, 3], [2, 1]]
+moves1 = [[1, 1], [3, 2], [1, 3], [2, 1]]
 
 yaxiswidth = digits(nrows)
 xaxiswidth = digits(nrows * ncols)
@@ -91,16 +93,19 @@ class KnightsTourTest(StageTest):
                 TestCase(stdin=[size, start, self.check_next_move]),
 
                 # # no solution case
-                TestCase(stdin=["3 3", "1 1", "1 1", self.check_valid_move]),   # choose taken spot
-                TestCase(stdin=["3 3", "1 1", "1 2", self.check_knight_move]),   # not knight's move
-                TestCase(stdin=["3 3", "1 1", "3 2", "3 2", self.check_valid_move]),   # choose taken spot
-                TestCase(stdin=["3 3", "1 1", "3 2", "3 3", self.check_knight_move]),   # not knight's move
-                TestCase(stdin=["3 3", "1 1", "3 2", "1 3", "2 1", "3 3", "1 2", "3 1", "2 3"], attach="8", check_function=self.check_dead_end),
+                TestCase(stdin=["3 3", "1 1", "1 1", self.check_valid_move]),  # choose taken spot
+                TestCase(stdin=["3 3", "1 1", "1 2", self.check_knight_move]),  # not knight's move
+                TestCase(stdin=["3 3", "1 1", "3 2", "3 2", self.check_valid_move]),  # choose taken spot
+                TestCase(stdin=["3 3", "1 1", "3 2", "3 3", self.check_knight_move]),  # not knight's move
+                TestCase(stdin=["3 3", "1 1", "3 2", "1 3", "2 1", "3 3", "1 2", "3 1", "2 3"], attach="8",
+                         check_function=self.check_dead_end),
 
                 # finish board case
                 TestCase(stdin=["4 3", "1 1", "3 2", "1 3", "2 1", self.check_progress]),
-                TestCase(stdin=["4 3", "1 1", "3 2", "1 3", "2 1", "4 2", "2 3", "3 1", "1 2", "3 3", "4 1", "2 2", "4 3"], check_function=self.check_finish),
-        ]
+                TestCase(
+                    stdin=["4 3", "1 1", "3 2", "1 3", "2 1", "4 2", "2 3", "3 1", "1 2", "3 3", "4 1", "2 2", "4 3"],
+                    check_function=self.check_finish),
+                ]
 
     def check_request_size(self, output):
         output = output.lower()
@@ -171,33 +176,12 @@ class KnightsTourTest(StageTest):
             return CheckResult.wrong("End of game message missing")
         return CheckResult.correct()
 
-    # def check(self, reply: str, attach: Any) -> CheckResult:
-
-
-    def warnsdorff(cur_x, cur_y, board):
-        possible = 0
-        for i in range(DIRECTIONS):
-            new_x = cur_x + move_x[i]   # user coordinates 1 - n
-            new_y = cur_y + move_y[i]   # user coordinates 1 - n
-            if validMove(new_x, new_y, board):
-                possible += 1
-        return possible
-
-
-    def validMove(x, y, board):  # user coordinates 1 - n
-        if not onBoard(x, y):
-            return False
-
-        if not "_" in board[y-1][x-1]:
-            return False
-        return True
-
     def check_progress(self, reply):
         # check output
         try:
             if reply == "":
                 return CheckResult.wrong("Output was empty")
-            border = "-" * (ncols * (xaxiswidth+1) + 3) + "\n"
+            border = "-" * (ncols * (xaxiswidth + 1) + 3) + "\n"
             reply = reply.split(border)
             if len(reply) != 3:
                 return CheckResult.wrong("Incorrect border or spacing")
@@ -211,7 +195,6 @@ class KnightsTourTest(StageTest):
                 return CheckResult.wrong("Incorrect side borders or format")
         except IndexError:
             return CheckResult.wrong("Incorrect border or spacing")
-
 
         board2 = []
         # iterate through rows to check
