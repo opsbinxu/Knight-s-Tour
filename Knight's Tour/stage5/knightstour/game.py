@@ -160,6 +160,7 @@ def play_game(start_x, start_y, ncols, nrows):
                 checkMove(x, y, ncols, nrows, warns_board)
                 printBoard(ncols, nrows, warns_board), print("")
                 moves += 1
+                # board[2][3] = "5"
                 break
     if moves == spaces:
         win = True

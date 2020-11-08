@@ -118,8 +118,9 @@ class KnightsTourTest(StageTest):
         try:
             if reply == "":
                 return CheckResult.wrong("Output was empty")
-            border = "-" * (ncols * (xaxiswidth) + 3) + "\n"
+            border = "-" * (ncols * (xaxiswidth+1) + 3) + "\n"
             reply = reply.split(border)
+            print(reply)
             if len(reply) != 3:
                 return CheckResult.wrong("Incorrect border or spacing")
         except:
