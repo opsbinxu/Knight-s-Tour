@@ -89,7 +89,7 @@ def check_knights_move(board):
         if i != 1:
             x_space = abs(last_x - curr_x)
             y_space = abs(last_y - curr_y)
-            if (x_space != 2 and y_space != 1) and (x_space != 1 and y_space != 2):
+            if (x_space != 2 or y_space != 1) and (x_space != 1 or y_space != 2):
                 return False
     return True
 
@@ -343,7 +343,6 @@ class KnightsTourTest(StageTest):
         if not (unique_nums(board2)):
             return CheckResult.wrong("Numbering should start from 1 and all numbers should be unique")
 
-        board2 = board2[::-1]
         if not check_knights_move(board2):
             return CheckResult.wrong("Your solution is incorrect, not all moves at knight's moves")
         return CheckResult.correct()
