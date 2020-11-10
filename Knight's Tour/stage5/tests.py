@@ -17,9 +17,11 @@ def digits(num):
 
 def checkMove(board):
     movelist = []
+    lastx = moves[-1][0]
+    lasty = moves[-1][1]
     for i in range(DIRECTIONS):
-        new_x = lastx1 + move_x[i]  # user coordinates 1 - n
-        new_y = lasty1 + move_y[i]  # user coordinates 1 - n
+        new_x = lastx + move_x[i]  # user coordinates 1 - n
+        new_y = lasty + move_y[i]  # user coordinates 1 - n
         if new_x in range(1, ncols + 1) and new_y in range(1, nrows + 1) and (
                 "_" in board[new_y - 1][new_x - 1] or board[new_y - 1][new_x - 1].isnumeric()):
             movelist.append([new_x, new_y])
@@ -30,10 +32,10 @@ def checkMove(board):
                 possible = warnsdorff(i + 1, j + 1, board)
                 if board[j][i] != str(possible):
                     return False, CheckResult.wrong("Incorrect value or marker missing from possible move")
-            elif i + 1 == lastx1 and j + 1 == lasty1:
+            elif i + 1 == lastx and j + 1 == lasty:
                 if board[j][i] not in ["x", "X"]:
                     return False, CheckResult.wrong("Incorrect starting position or marker")
-            elif [i + 1, j + 1] in moves1:
+            elif [i + 1, j + 1] in moves:
                 if board[j][i] != "*":
                     return False, CheckResult.wrong("Incorrect marker or marker missing from previous move")
             else:
@@ -69,9 +71,7 @@ def onBoard(x, y):  # user coordinates 1 - n
 random.seed()
 ncols = 4
 nrows = 3
-lastx1 = 2
-lasty1 = 1
-moves1 = [[1, 1], [3, 2], [1, 3], [2, 1]]
+moves = [[1, 1], [3, 2], [1, 3], [2, 1]]
 
 yaxiswidth = digits(nrows)
 xaxiswidth = digits(nrows * ncols)

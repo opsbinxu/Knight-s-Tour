@@ -17,9 +17,11 @@ def digits(num):
 
 def checkMove(board):
     movelist = []
+    lastx = moves[-1][0]
+    lasty = moves[-1][1]
     for i in range(DIRECTIONS):
-        new_x = lastx1 + move_x[i]  # user coordinates 1 - n
-        new_y = lasty1 + move_y[i]  # user coordinates 1 - n
+        new_x = lastx + move_x[i]  # user coordinates 1 - n
+        new_y = lasty + move_y[i]  # user coordinates 1 - n
         if new_x in range(1, ncols + 1) and new_y in range(1, nrows + 1) and (
                 "_" in board[new_y - 1][new_x - 1] or board[new_y - 1][new_x - 1].isnumeric()):
             movelist.append([new_x, new_y])
@@ -30,10 +32,10 @@ def checkMove(board):
                 possible = warnsdorff(i + 1, j + 1, board)
                 if board[j][i] != str(possible):
                     return False, CheckResult.wrong("Incorrect value or marker missing from possible move")
-            elif i + 1 == lastx1 and j + 1 == lasty1:
+            elif i + 1 == lastx and j + 1 == lasty:
                 if board[j][i] not in ["x", "X"]:
                     return False, CheckResult.wrong("Incorrect starting position or marker")
-            elif [i + 1, j + 1] in moves1:
+            elif [i + 1, j + 1] in moves:
                 if board[j][i] != "*":
                     return False, CheckResult.wrong("Incorrect marker or marker missing from previous move")
             else:
@@ -65,14 +67,37 @@ def onBoard(x, y):  # user coordinates 1 - n
         return True
     return False
 
+def unique_nums(board):
+    result = []
+    for row in board:
+        for num in row:
+            if num.isnumeric():
+                result.append(num)
+    result = set(result)
+    return len(result) == spaces_sol
+
+def check_knights_move(board):
+    curr_x, curr_y = 0, 0
+    for i in range(1, spaces_sol+1):
+        for y, row in enumerate(board):
+            for x, num in enumerate(row):
+                if int(num) == i:
+                    last_x, last_y = curr_x, curr_y
+                    curr_x = x
+                    curr_y = y
+                    break
+        if i != 1:
+            x_space = abs(last_x - curr_x)
+            y_space = abs(last_y - curr_y)
+            if (x_space != 2 and y_space != 1) and (x_space != 1 and y_space != 2):
+                return False
+    return True
+
 
 random.seed()
 ncols = 4
 nrows = 3
-lastx1 = 2
-lasty1 = 1
-moves1 = [[1, 1], [3, 2], [1, 3], [2, 1]]
-
+moves = [[1, 1], [3, 2], [1, 3], [2, 1]]
 yaxiswidth = digits(nrows)
 xaxiswidth = digits(nrows * ncols)
 size = str(ncols) + " " + str(nrows)
@@ -80,32 +105,80 @@ x_start = random.randint(3, ncols)
 y_start = random.randint(3, nrows)
 start = str(x_start) + " " + str(y_start)
 
+random.seed()
+ncols_sol = random.choice([6, 8, 10])
+nrows_sol = random.choice([6, 8, 10])
+yaxiswidth_sol = digits(nrows_sol)
+xaxiswidth_sol = digits(nrows_sol * ncols_sol)
+size_sol = str(ncols_sol) + " " + str(nrows_sol)
+x_start_sol = random.randint(1, ncols_sol)
+y_start_sol = random.randint(1, nrows_sol)
+start_sol = str(x_start_sol) + " " + str(y_start_sol)
+spaces_sol = ncols_sol*nrows_sol
 
 class KnightsTourTest(StageTest):
     def generate(self) -> List[TestCase]:
-        return [TestCase(stdin=[self.check_request_size, self.check_request_start]),
+        return [
+                TestCase(stdin=[self.check_request_size, self.check_request_start, self.check_request_mode]),
                 TestCase(stdin=["0 10", self.check_bounds]),
                 TestCase(stdin=["1", self.check_length]),
                 TestCase(stdin=["a 10", self.check_num]),
                 TestCase(stdin=[size, "0 10", self.check_bounds]),
                 TestCase(stdin=[size, "1", self.check_length]),
                 TestCase(stdin=[size, "a 1", self.check_num]),
-                TestCase(stdin=[size, start, self.check_next_move]),
+                TestCase(stdin=[size, start, "t", self.check_mode]),
+                TestCase(stdin=[size, start, " ", self.check_mode]),
+                TestCase(stdin=[size, start, "-1", self.check_mode]),
 
-                # # no solution case
-                TestCase(stdin=["3 3", "1 1", "1 1", self.check_valid_move]),  # choose taken spot
-                TestCase(stdin=["3 3", "1 1", "1 2", self.check_knight_move]),  # not knight's move
-                TestCase(stdin=["3 3", "1 1", "3 2", "3 2", self.check_valid_move]),  # choose taken spot
-                TestCase(stdin=["3 3", "1 1", "3 2", "3 3", self.check_knight_move]),  # not knight's move
-                TestCase(stdin=["3 3", "1 1", "3 2", "1 3", "2 1", "3 3", "1 2", "3 1", "2 3"], attach="8",
+                # player tries board, possible solution case
+                TestCase(stdin=["4 3", "1 1", "y", self.check_input_accepted], check_function=self.check_soln_exist),   # check input accepted
+                TestCase(stdin=["4 3", "1 1", "y", "1 1", self.check_valid_move], check_function=self.check_soln_exist),  # choose taken spot
+                TestCase(stdin=["4 3", "1 1", "y", "1 2", self.check_knight_move], check_function=self.check_soln_exist),  # not knight's move
+                TestCase(stdin=["4 3", "1 1", "y", "3 2", "3 2", self.check_valid_move], check_function=self.check_soln_exist),  # choose taken spot
+                TestCase(stdin=["4 3", "1 1", "y", "3 2", "3 3", self.check_knight_move], check_function=self.check_soln_exist),  # not knight's move
+                TestCase(stdin=["4 3", "1 1", "y", "2 3", "3 1", "4 3", "2 2", "4 1", "3 3", "2 1", "1 3", "3 2"], attach="10",
                          check_function=self.check_dead_end),
-
-                # finish board case
-                TestCase(stdin=["4 3", "1 1", "3 2", "1 3", "2 1", self.check_progress]),
+                TestCase(stdin=["4 3", "1 1", "y", "3 2", "1 3", "2 1", self.check_progress], check_function=self.check_soln_exist),
                 TestCase(
-                    stdin=["4 3", "1 1", "3 2", "1 3", "2 1", "4 2", "2 3", "3 1", "1 2", "3 3", "4 1", "2 2", "4 3"],
+                    stdin=["4 3", "1 1", "y", "3 2", "1 3", "2 1", "4 2", "2 3", "3 1", "1 2", "3 3", "4 1", "2 2", "4 3"],
                     check_function=self.check_finish),
+
+                # player tries board, no solution case
+                TestCase(stdin=["3 3", "1 1", "y", self.check_no_soln1], check_function=self.check_no_soln2),  # board not possible
+
+                # generate solution, no solution case
+                TestCase(stdin=["3 3", "1 1", "n", self.check_input_accepted], check_function=self.check_no_soln2),  # no board not possible
+
+                # generate solution, solution exists
+                TestCase(stdin=["5 5", "1 1", "n", self.check_input_accepted], check_function=self.check_soln_exist),
+                TestCase(stdin=[size_sol, start_sol, "n"], check_function=self.check_solution),  # no board not possible
                 ]
+
+    def check_soln_exist(self, reply: str, attach: Any) -> CheckResult:
+        reply = reply.lower()
+        if "here" not in reply or "solution" not in reply:
+            return CheckResult.wrong("Solution should exist. You need to show the solution and a message")
+        return CheckResult.correct()
+
+    def check_no_soln1(self, output):
+        output = output.lower()
+        if "invalid" not in output:
+            return CheckResult.wrong("You need to check if there are solutions for the board")
+        return CheckResult.correct()
+
+    def check_no_soln2(self, reply: str, attach: Any) -> CheckResult:
+        for line in reply.lower().split("\n")[-2:-1]:
+            if "exist" in line:
+                break
+        else:
+            return CheckResult.wrong("No solution should exist, you need to check if there are solutions for the board")
+        return CheckResult.correct()
+
+    def check_input_accepted(self, output):
+        output = output.lower()
+        if "invalid" in output:
+            return CheckResult.wrong("Input was not accepted")
+        return CheckResult.correct()
 
     def check_request_size(self, output):
         output = output.lower()
@@ -117,7 +190,12 @@ class KnightsTourTest(StageTest):
         output = output.lower()
         if "position" not in output:
             return CheckResult.wrong("Your program should ask for the knight's starting position")
-        # return start
+        return start
+
+    def check_request_mode(self, output):
+        output=output.lower()
+        if "puzzle" not in output or "try" not in output:
+            return CheckResult.wrong("Your program should ask if the player wants to try the puzzle")
         return CheckResult.correct()
 
     def check_bounds(self, output):
@@ -133,6 +211,11 @@ class KnightsTourTest(StageTest):
     def check_num(self, output):
         if "invalid" not in output.lower():
             return CheckResult.wrong("Your program should only accept integer inputs")
+        return CheckResult.correct()
+
+    def check_mode(self, output):
+        if "invalid" not in output.lower():
+            return CheckResult.wrong("Your program should only accept 'y' or 'n'")
         return CheckResult.correct()
 
     def check_next_move(self, output):
@@ -219,6 +302,50 @@ class KnightsTourTest(StageTest):
         else:
             return message
 
+        return CheckResult.correct()
+
+    def check_solution(self, reply: str, attach: Any) -> CheckResult:
+        # check output
+        try:
+            if reply == "":
+                return CheckResult.wrong("Output was empty")
+            border = "-" * (ncols_sol * (xaxiswidth_sol + 1) + 3) + "\n"
+            reply = reply.split(border)
+            if len(reply) != 3:
+                return CheckResult.wrong("Incorrect border or spacing")
+        except:
+            return CheckResult.wrong("Incorrect output")
+
+        # extract board and xlabels
+        try:
+            board = reply[1].split(" |\n")[0:nrows_sol]
+            if len(board) != nrows_sol:
+                return CheckResult.wrong("Incorrect side borders or format")
+        except IndexError:
+            return CheckResult.wrong("Incorrect border or spacing")
+
+        board2 = []
+        # iterate through rows to check
+        for n, row in enumerate(board):
+            rownum = nrows_sol - n
+            colnum = n + 1
+
+            # split at left border, check if row split correctly
+            row = row.split("|")
+            if len(row) != 2:
+                return CheckResult.wrong("Incorrect side borders or format")
+
+            if len(row[0]) != yaxiswidth_sol:
+                return CheckResult.wrong("Row numbers or side border not aligned")
+
+            board2.append(row[1].split())
+
+        if not (unique_nums(board2)):
+            return CheckResult.wrong("Numbering should start from 1 and all numbers should be unique")
+
+        board2 = board2[::-1]
+        if not check_knights_move(board2):
+            return CheckResult.wrong("Your solution is incorrect, not all moves at knight's moves")
         return CheckResult.correct()
 
 
